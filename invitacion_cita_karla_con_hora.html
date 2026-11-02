@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algo especial para ti 💗</title>
+<style>
+:root{--pink:#ff36c7;--cyan:#19d9ff;--bg:#080b2d;--card:#111747}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#fff;background:radial-gradient(circle at 50% 20%,#25206e 0,#10133f 38%,#060821 100%);display:grid;place-items:center;padding:24px;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 80%,#ff36c722,transparent 30%),radial-gradient(circle at 85% 15%,#19d9ff22,transparent 28%)}
+.wrap{width:min(100%,440px);position:relative;z-index:1}
+.card{background:linear-gradient(145deg,#182052ee,#101638f5);border:1px solid #ffffff22;border-radius:24px;padding:28px 24px;text-align:center;box-shadow:0 20px 70px #0008,0 0 35px #a52bff20;backdrop-filter:blur(12px);animation:appear .45s ease}
+@keyframes appear{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes pulse{50%{transform:scale(1.07);filter:brightness(1.25)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{50%{transform:translateY(-8px)}}
+h1{font-size:clamp(25px,7vw,34px);line-height:1.15;margin:14px 0;color:#fff;text-shadow:0 0 18px #ff36c788}
+p{color:#c9d0f4;line-height:1.55;margin:10px 0 20px}
+.hero{width:118px;height:118px;object-fit:cover;border-radius:18px;border:2px solid #ffffff55;box-shadow:0 0 24px #ff36c766;animation:float 3s ease-in-out infinite}
+.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#79eaff;font-weight:800}
+button{border:0;border-radius:13px;padding:13px 22px;font-weight:800;font-size:15px;color:white;cursor:pointer;transition:.2s}
+button:hover{transform:translateY(-2px);filter:brightness(1.12)}
+.primary{background:linear-gradient(100deg,#ff39b9,#b82cff);box-shadow:0 6px 22px #ff36c766}
+.secondary{background:#303b79;border:1px solid #ffffff20}
+.buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.progress{height:9px;border-radius:20px;background:#303761;overflow:hidden;margin:24px 0}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#19d9ff,#ff36c7);border-radius:20px;transition:width 2.3s}
+.date{width:100%;padding:13px;background:#0b1236;color:white;border:1px solid #6570b9;border-radius:12px;font:inherit;margin:12px 0 18px;color-scheme:dark}
+.foods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
+.food{background:#182354;border:1px solid #5663a0;border-radius:14px;padding:16px 8px;cursor:pointer}
+.food .emoji{font-size:30px;display:block;margin-bottom:5px}
+.food.selected{border:2px solid var(--cyan);background:#163a69;box-shadow:0 0 18px #19d9ff44}
+.food small{color:#cbd4ff}
+.summary{background:#0b1236;border:1px solid #4b5795;border-radius:15px;padding:18px;text-align:left;margin:18px 0}
+.summary div{display:flex;justify-content:space-between;gap:15px;padding:8px 0;border-bottom:1px solid #ffffff16}
+.summary div:last-child{border:0}
+.summary strong{color:#8deaff;text-align:right}
+.tiny{font-size:12px;color:#98a4d9}
+.heart{font-size:48px;display:block;animation:pulse 1.4s infinite}
+.hidden{display:none}
+footer{font-size:11px;color:#8490c8;text-align:center;margin-top:18px}
+#noBtn{position:relative}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="card" id="step1">
+    <div class="eyebrow">Karla, una pregunta importante</div>
+    <div style="margin:20px 0"><img class="hero" id="heroImg" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" alt="Un detalle especial" onerror="this.style.display='none'"></div>
+    <span class="heart">💗</span>
+    <h1>¿Quieres salir conmigo?</h1>
+    <p>Piénsalo bien... puede que tengamos un plan bastante especial. ✨</p>
+    <div class="buttons">
+      <button class="primary" onclick="accept()">¡Sí, obvio! 💖</button>
+      <button class="secondary" id="noBtn" onclick="nope()">No</button>
+    </div>
+    <footer>Hecho con cariño · una invitación especial</footer>
+  </section>
+
+  <section class="card hidden" id="step2">
+    <div class="eyebrow">Procesando felicidad</div>
+    <span class="heart">🥹</span>
+    <h1>Espera, espera...</h1>
+    <p id="loadingText">Estamos preparando algo bonito para los dos.</p>
+    <div class="progress"><span id="bar"></span></div>
+    <p class="tiny">Nivel de felicidad: <b id="percent">0%</b></p>
+  </section>
+
+  <section class="card hidden" id="step3">
+    <div class="eyebrow">Paso 1 de 3</div>
+    <h1>Elige el día 📅</h1>
+    <p>¿Qué día te acomoda para nuestra cita?</p>
+    <input class="date" id="date" type="date">
+    <label for="time" style="display:block;text-align:left;color:#c9d0f4;font-size:14px;margin-top:4px">🕒 ¿A qué hora?</label>
+    <input class="date" id="time" type="time" required>
+    <button class="primary" style="width:100%" onclick="nextDate()">Siguiente 💗</button>
+  </section>
+
+  <section class="card hidden" id="step4">
+    <div class="eyebrow">Paso 2 de 3</div>
+    <h1>¿Qué se te antoja? 🍕</h1>
+    <p>Elige qué comemos ese día.</p>
+    <div class="foods">
+      <button class="food" onclick="chooseFood(this,'Completos 🌭')"><span class="emoji">🌭</span>Completos<small> · ¡Qué rico!</small></button>
+      <button class="food" onclick="chooseFood(this,'Pizza 🍕')"><span class="emoji">🍕</span>Pizza<small> · Clásico ganador</small></button>
+      <button class="food" onclick="chooseFood(this,'Sushi 🍣')"><span class="emoji">🍣</span>Sushi<small> · Algo especial</small></button>
+      <button class="food" onclick="chooseFood(this,'Hamburguesas 🍔')"><span class="emoji">🍔</span>Hamburguesas<small> · Nunca falla</small></button>
+    </div>
+    <button class="primary" style="width:100%" onclick="confirmFood()">Confirmar 💖</button>
+  </section>
+
+  <section class="card hidden" id="step5">
+    <div class="eyebrow">Paso 3 de 3</div>
+    <span class="heart">💘</span>
+    <h1>¡Cita agendada!</h1>
+    <p>¡Ya tenemos plan! Ahora solo queda esperar ese día. ✨</p>
+    <div class="summary">
+      <div><span>📅 Fecha</span><strong id="finalDate"></strong></div>
+      <div><span>🕒 Hora</span><strong id="finalTime"></strong></div>
+      <div><span>🍽️ Comida</span><strong id="finalFood"></strong></div>
+      <div><span>💗 Plan</span><strong>Pasarlo increíble</strong></div>
+    </div>
+    <p class="tiny">La mejor parte del plan será compartirlo contigo. 🥰</p>
+    <button class="primary" style="width:100%" onclick="sharePlan()">Compartir invitación 💌</button>
+    <footer>Fin de la invitación · comienzo de algo bonito</footer>
+  </section>
+</main>
+<script>
+let selectedFood='';
+const steps=['step1','step2','step3','step4','step5'];
+function show(id){steps.forEach(s=>document.getElementById(s).classList.toggle('hidden',s!==id));}
+function accept(){
+  show('step2');
+  const bar=document.getElementById('bar'),pct=document.getElementById('percent');
+  let n=0;const timer=setInterval(()=>{n+=5;bar.style.width=n+'%';pct.textContent=n+'%';if(n>=100){clearInterval(timer);setTimeout(()=>show('step3'),350);}},90);
+}
+function nope(){
+  const b=document.getElementById('noBtn');
+  b.textContent='¿Segura? 🥺';
+  b.style.transform=`translate(${Math.random()*100-50}px,${Math.random()*50-25}px)`;
+}
+function nextDate(){
+  const value=document.getElementById('date').value;
+  const time = document.getElementById('time').value;
+  if(!value){alert('Elige una fecha primero 💗');return;}
+  if(!time){alert('Elige una hora para la cita 🕒');return;}
+  const chosen=new Date(value+'T12:00:00');
+  const today=new Date();today.setHours(0,0,0,0);
+  if(chosen<today){alert('Elige una fecha de hoy en adelante 😊');return;}
+  show('step4');
+}
+function chooseFood(el,food){
+  document.querySelectorAll('.food').forEach(x=>x.classList.remove('selected'));
+  el.classList.add('selected');selectedFood=food;
+}
+function confirmFood(){
+  if(!selectedFood){alert('Elige algo rico para comer 🍕');return;}
+  const value=document.getElementById('date').value;
+  document.getElementById('finalDate').textContent=new Date(value+'T12:00:00').toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('finalTime').textContent=document.getElementById('time').value;
+  document.getElementById('finalFood').textContent=selectedFood;
+  show('step5');
+}
+function sharePlan(){
+  const date = document.getElementById('finalDate').textContent;
+  const time = document.getElementById('finalTime').textContent;
+  const msg = `¡Tenemos una cita! 💗\n\nFecha: ${date}\nHora: ${time}\nComida: ${selectedFood}\n\n¡Nos vemos! 🥰`;
+  const subject = '¡Nuestra cita está agendada! 💗';
+  const mailto = `mailto:stephentapia10@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`;
+  window.location.href = mailto;
+}
+// Permitir agendar únicamente desde hoy hasta el último día del mes actual.
+const dateInput = document.getElementById('date');
+const now = new Date();
+const localISODate = d => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
+dateInput.min = localISODate(now);
+dateInput.max = localISODate(new Date(now.getFullYear(), now.getMonth() + 1, 0));
+</script>
+</body>
+</html>
