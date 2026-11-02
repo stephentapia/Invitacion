@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algo especial para ti 💗</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="wrap">
+  <section class="card" id="step1">
+    <div class="eyebrow">Karla, una pregunta importante</div>
+    <div style="margin:20px 0"><img class="hero" id="heroImg" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" alt="Un detalle especial" onerror="this.style.display='none'"></div>
+    <span class="heart">💗</span>
+    <h1>¿Quieres salir conmigo?</h1>
+    <p>Piénsalo bien... puede que tengamos un plan bastante especial. ✨</p>
+    <div class="buttons">
+      <button class="primary" onclick="accept()">¡Sí, obvio! 💖</button>
+      <button class="secondary" id="noBtn" onclick="nope()">No</button>
+    </div>
+    <footer>Hecho con cariño · una invitación especial</footer>
+  </section>
+
+  <section class="card hidden" id="step2">
+    <div class="eyebrow">Procesando felicidad</div>
+    <span class="heart">🥹</span>
+    <h1>Espera, espera...</h1>
+    <p id="loadingText">Estamos preparando algo bonito para los dos.</p>
+    <div class="progress"><span id="bar"></span></div>
+    <p class="tiny">Nivel de felicidad: <b id="percent">0%</b></p>
+  </section>
+
+  <section class="card hidden" id="step3">
+    <div class="eyebrow">Paso 1 de 3</div>
+    <h1>Elige el día 📅</h1>
+    <p>¿Qué día te acomoda para nuestra cita?</p>
+    <input class="date" id="date" type="date">
+    <label class="field-label" for="time">🕒 ¿A qué hora?</label>
+    <input class="date" id="time" type="time" required>
+    <button class="primary btn-block" onclick="nextDate()">Siguiente 💗</button>
+  </section>
+
+  <section class="card hidden" id="step4">
+    <div class="eyebrow">Paso 2 de 3</div>
+    <h1>¿Qué se te antoja? 🍕</h1>
+    <p>Elige qué comemos ese día.</p>
+    <div class="foods">
+      <button class="food" onclick="chooseFood(this,'Completos 🌭')"><span class="emoji">🌭</span>Completos<small> · ¡Qué rico!</small></button>
+      <button class="food" onclick="chooseFood(this,'Pizza 🍕')"><span class="emoji">🍕</span>Pizza<small> · Clásico ganador</small></button>
+      <button class="food" onclick="chooseFood(this,'Sushi 🍣')"><span class="emoji">🍣</span>Sushi<small> · Algo especial</small></button>
+      <button class="food" onclick="chooseFood(this,'Hamburguesas 🍔')"><span class="emoji">🍔</span>Hamburguesas<small> · Nunca falla</small></button>
+    </div>
+    <button class="primary btn-block" onclick="confirmFood()">Confirmar 💖</button>
+  </section>
+
+  <section class="card hidden" id="step5">
+    <div class="eyebrow">Paso 3 de 3</div>
+    <span class="heart">💘</span>
+    <h1>¡Cita agendada!</h1>
+    <p>¡Ya tenemos plan! Ahora solo queda esperar ese día. ✨</p>
+    <div class="summary">
+      <div><span>📅 Fecha</span><strong id="finalDate"></strong></div>
+      <div><span>🕒 Hora</span><strong id="finalTime"></strong></div>
+      <div><span>🍽️ Comida</span><strong id="finalFood"></strong></div>
+      <div><span>💗 Plan</span><strong>Pasarlo increíble</strong></div>
+    </div>
+    <p class="status" id="sendStatus" role="status"></p>
+    <button class="primary btn-block hidden" id="sendBtn" onclick="enviarCorreo()">Reintentar envío 💌</button>
+    <p class="tiny">La mejor parte del plan será compartirlo contigo. 🥰</p>
+    <footer>Fin de la invitación · comienzo de algo bonito</footer>
+  </section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
